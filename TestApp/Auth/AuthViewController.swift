@@ -65,8 +65,8 @@ class AuthViewController: UIViewController {
                 }
             } else {
                 Auth.auth().signIn(withEmail: email, password: password) { result, error in
-                    if let _ = result {
-                        //загружать фавориты итд
+                    if let result = result {
+                        downloadFavorites()
                         
                     }
                     
