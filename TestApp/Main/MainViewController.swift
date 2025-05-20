@@ -67,29 +67,31 @@ class MainViewController: UIViewController {
     
     func setPopular() {
         popular = []
+        
         let placesToFetch = sortedPlaces
-        var fetchedPlaces: [Place] = []
         var fetchedCount = 0
+        var fetchedPlaces: [Place] = []
         
         loading.startAnimating()
         collectionView.isUserInteractionEnabled = false
-        
         for place in placesToFetch {
             db.child("places").child(place.name).observeSingleEvent(of: .value, with: { snaphot in
                 defer {
                     fetchedCount += 1
                     if fetchedCount == placesToFetch.count {
                         self.popular = fetchedPlaces
-                        self.loading.stopAnimating()
                         self.collectionView.reloadData()
+                        self.loading.stopAnimating()
                         self.collectionView.isUserInteractionEnabled = true
                     }
                 }
                 
-                guard let value = snaphot.value as? [String: Any], let rating = value["visitors"] as? Int, rating >= 10 else { return }
-                    fetchedPlaces.append(place)
+                guard let value = snaphot.value as? [String: Any], let visitors = value["visitors"] as? Int, visitors >= 10 else { return }
+                fetchedPlaces.append(place)
+                
             })
         }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

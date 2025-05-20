@@ -32,8 +32,8 @@ class PlaceViewController: UIViewController {
     
 
     @objc func beenButtonTapped() {
-        db.child("places").child(self.place.name).observeSingleEvent(of: .value, with: { snapshot in
-            guard let value = snapshot.value as? [String: Any], var visitors = value["visitors"] as? Int else { return }
+        db.child("places").child(self.place.name).observeSingleEvent(of: .value, with: { snaphot in
+            guard let value = snaphot.value as? [String: Any], var visitors = value["visitors"] as? Int else { return }
             
             if beenPlaces.contains(self.place) {
                 visitors -= 1
