@@ -427,17 +427,9 @@ var recommendedPlaces: [Recommended] = [
 
 var favorites: [Place] = []
 
-var beenPlaces: [Place] = [] {
-    didSet {
-        uploadBeenPlaces()
-    }
-}
+var beenPlaces: [Place] = []
 
-var rewards: [String] = [] {
-    didSet {
-        uploadRewards()
-    }
-}
+var rewards: [String] = []
 
 func uploadRewards() {
     UserDefaults.standard.set(rewards, forKey: "rewards-\(Auth.auth().currentUser!.uid)")

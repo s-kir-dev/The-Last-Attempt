@@ -47,6 +47,7 @@ class PlaceViewController: UIViewController {
             
             db.child("places").child(self.place.name).updateChildValues(["visitors": visitors])
         })
+        uploadBeenPlaces()
     }
     
     @objc func mapButtonTapped() {
