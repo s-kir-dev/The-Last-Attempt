@@ -427,7 +427,38 @@ var recommendedPlaces: [Recommended] = [
 
 var favorites: [Place] = []
 
-var rewards: [String] = []
+var beenPlaces: [Place] = [] {
+    didSet {
+        uploadBeenPlaces()
+    }
+}
+
+var rewards: [String] = [] {
+    didSet {
+        uploadRewards()
+    }
+}
+
+func uploadRewards() {
+    UserDefaults.standard.set(rewards, forKey: "rewards-\(Auth.auth().currentUser!.uid)")
+}
+
+
+func downloadRewards() {
+    rewards = UserDefaults.standard.array(forKey: "rewards-\(Auth.auth().currentUser!.uid)") as? [String] ?? []
+}
+
+func uploadBeenPlaces() {
+    if let encodedData = try? JSONEncoder().encode(beenPlaces) {
+        UserDefaults.standard.set(encodedData, forKey: "beenPlaces-\(Auth.auth().currentUser!.uid)")
+    }
+}
+
+func downloadBeenPlaces() {
+    if let data = UserDefaults.standard.data(forKey: "beenPlaces-\(Auth.auth().currentUser!.uid)"), let decodedData = try? JSONDecoder().decode([Place].self, from: data) {
+        beenPlaces = decodedData
+    }
+}
 
 func uploadFavorites() {
     if let encodedData = try? JSONEncoder().encode(favorites) {

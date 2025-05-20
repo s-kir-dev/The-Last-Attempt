@@ -23,8 +23,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 tabBar.selectedIndex = 0
                 window.rootViewController = tabBar
                 downloadFavorites()
+                downloadBeenPlaces()
+                downloadRewards()
             } else {
                 favorites = []
+                beenPlaces = []
+                rewards = []
                 window.rootViewController = startVC
             }
         }

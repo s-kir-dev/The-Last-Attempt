@@ -91,6 +91,13 @@ class MainViewController: UIViewController {
             })
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showPlace" {
+            guard let destination = segue.destination as? PlaceViewController else { return }
+            destination.place = selectedPlace
+        }
+    }
 }
 
 
@@ -98,7 +105,8 @@ extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self.collectionView {
             let place = popular[indexPath.item]
-            print(place.name)
+            selectedPlace = place
+            performSegue(withIdentifier: "showPlace", sender: self)
         }
     }
 }
