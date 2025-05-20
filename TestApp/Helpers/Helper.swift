@@ -464,12 +464,20 @@ func countRating(place: Place, showReviews: Bool, completion: @escaping (String)
         }
         
         group.notify(queue: .main) {
-            let rating = Double(summa)/Double(kolvo)
-            let roundedRating = Double(rating*100).rounded()/100
-            if showReviews {
-                completion("⭐️\(roundedRating) (\(kolvo)K Reviews")
+            if kolvo > 0 {
+                let rating = Double(summa)/Double(kolvo)
+                let roundedRating = Double(rating*100).rounded()/100
+                if showReviews {
+                    completion("⭐️\(roundedRating) (\(kolvo)K Reviews")
+                } else {
+                    completion("⭐️\(roundedRating)")
+                }
             } else {
-                completion("⭐️\(roundedRating)")
+                if showReviews {
+                    completion("⭐️0.0 (0K Reviews")
+                } else {
+                    completion("⭐️0")
+                }
             }
         }
     })
